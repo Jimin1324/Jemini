@@ -5,6 +5,8 @@ Google Gemini + Jimin Park
 
 This repository is intended to share a simple code sample for retrieving the Gemini API and building a website using the Flask framework.
 
+<br/>
+
 To test this repository, download the "app.py" and "index.html" files, and try to change the "app.py" Python file to get a connection to your MongoDB and Google Gemini.
 
 
