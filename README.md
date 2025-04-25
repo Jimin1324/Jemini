@@ -1,3 +1,3 @@
-#Jemini
+# Jemini
 
 Google Gemini + Jimin Park
