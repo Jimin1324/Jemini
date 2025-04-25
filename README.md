@@ -8,6 +8,9 @@ This repository is intended to share a simple code sample for retrieving the Gem
 To test this repository, download the "app.py" and "index.html" files, and try to change the "app.py" Python file to get a connection to your MongoDB and Google Gemini.
 
 
+
+
+
 **app.py**
 
 ```
