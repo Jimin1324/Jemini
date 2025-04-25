@@ -15,7 +15,6 @@ To test this repository, download the "app.py" and "index.html" files, and try t
 ```
 url = "mongodb+srv://YOUR_MONGODB_ID:YOUR_MONGODB_PASSWORD@YOUR_MONGODB_DATABASE.YOUR_MONGODB_CLUSTER.mongodb.net/"
 ```
-
 ```
 genai.configure(api_key="YOUR_GEMINI_KEY")
 ```
