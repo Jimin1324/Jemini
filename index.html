@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+
+    <title>AWS 연동 전</title>
+
+    <!-- style -->
+
+    <style type="text/css">
+        * {
+            font-family: "poppin", sans-serif;
+        }
+
+        /* h1{
+            font-weight: 800;
+        } */
+        .wrap {
+            width: 900px;
+            margin: auto;
+        }
+
+        .comment {
+            color: blue;
+            font-weight: bold;
+        }
+
+        #post-box {
+            width: 700px;
+            margin: 20px auto;
+            padding: 50px;
+            border: black solid;
+            border-radius: 5px;
+        }
+
+        .round {
+            border-radius: 16px 0 0 16px;
+            width:300px;
+            height: 30px;
+            border:1px solid white;
+            padding-left: 10px;
+        }
+        .round:focus {
+            outline: none;
+            border: 1px solid white;
+        }
+        
+button{
+    height:30px;
+    padding:0 11px 0 6px;
+    letter-spacing: -0.1rem;
+    border-radius:0 16px 16px 0;
+    color:white;
+    background-color:rgb(41, 66, 148);
+    /* border: 1px white solid; */
+    border: 1px solid rgb(41, 66, 148);
+    font-size: 0.8rem;
+    
+}
+        .box {
+            margin-bottom: -35px;
+            font-size:0.9rem;
+            width: 700px;
+            height: 300px;
+            background-color: rgba(54, 88, 202, 0.176);
+            border-radius: 16px;
+            overflow: hidden;
+            padding-left: 20px;
+            padding-top: 5px;
+            position: relative;
+            z-index: -5;
+        }
+
+
+        .box::after {
+            content: "";
+            z-index: -10;
+            background: rgb(54, 88, 202);
+            right: 0;   
+            bottom: 0;
+            background: linear-gradient(0deg, rgba(54, 88, 202, 1) 0%, rgba(54, 88, 202, 0) 24%, rgba(54, 88, 202, 0) 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            console.log("start");
+            showHistory();
+        });
+
+
+
+        function showHistory() {
+            $.ajax({
+                type: "GET",
+                url: "/api/history",
+                data: {},
+                success: function (response) {
+                    let history = response["history"]
+                    console.log(history);
+                    $("#history-box").text("");
+                    alert(history);
+                    if (response["result"] == "success") {
+                        for (let i = 0; i < history.length; i++) {
+                            listHistory(history[i]);
+                            console.log(history[i]);
+
+                        }
+                    }
+                }
+            })
+        }
+        function listHistory(rec) {
+            let qwer = `<div class="history">
+            <div class="article">
+                ${rec}
+            </div>
+        </div>`;
+            $("#history-box").append(qwer);
+        }
+
+        function asking() {
+            let ask_now = $("#Asking").val();
+            console.log(ask_now);
+            $.ajax({
+                type: "POST",
+                url: "/api/asking",
+                data: { asking: ask_now },
+                success: function (response) { 
+                    if (response["result"] == "success") {
+                        alert(response["msg"]);
+                        showHistory();
+                        $("#Asking").text("")
+                    }
+                }
+            })
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="jumbotron" style="border-radius: 16px;">
+            <h1 class="display-4" style="font-weight:900; color: rgba(54, 88, 202, 0.605);">Jemini</h1>
+            <p class="lead" style="color:rgba(42, 42, 42, 0.605); letter-spacing: -0.1rem;">powered by Gemini</p>
+            <hr class="my-4">
+        </div>
+    </div>
+    </div>
+    </div>
+    <div style="display:flex;" class="inter">
+        <div style="display:flex; flex-direction: column; margin:0 auto;">
+            <div id="history-box" class="box"></div>
+            <div style="display:flex; text-align: center;">
+                <div style="display:flex; text-align: center; margin: 0 auto;">
+                    <input type="text" id="Asking" class="round">
+                    <button type="button" onclick="asking()">
+                        물어보세요
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
